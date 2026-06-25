@@ -204,7 +204,8 @@ const styles = {
     table: {
         width: "100%",
         borderCollapse: "separate",
-        borderSpacing: "0 12px"
+        borderSpacing: "0 12px",
+        tableLayout: "fixed",
     },
     thead: {
         color: "#0f766e!important", 
