@@ -69,80 +69,72 @@ export default function App() {
 
     return (
         <>
-        <Toaster
-            position="top-right"
-            toastOptions={{
-                style: {borderRadius: "12px"}
-            }}
-        />
-        <div style={styles.page}>
-            <div style={styles.card}>
-            <h1 style={styles.title}> My name is...? </h1>
-            <div style={styles.form}>
-                <input
-                value={first}
-                placeholder="First Name"
-                style={styles.input}
-                onChange={(e) => setFirst(e.target.value)}
-                />
-
-                <input
-                value={last}
-                placeholder="Last Name"
-                style={styles.input}
-                onChange={(e) => setLast(e.target.value)}
-                />
-
-                <button
-                disabled={disabled}
-                onClick={save}
-                style={{
-                    ...styles.button,
-                    opacity: disabled ? 0.5 : 1,
-                    cursor: disabled
-                    ? "not-allowed"
-                    : "pointer"
+            <Toaster
+                position="top-right"
+                toastOptions={{
+                    style: { borderRadius: "12px" }
                 }}
-                >
-                {loading ? "Saving..." : "Submit"}
-                </button>
+            />
+            <div style={styles.page}>
+                <div style={styles.card}>
+                    <h1 style={styles.title}> My name is...? </h1>
+                    <div style={styles.form}>
+                        <input
+                            value={first}
+                            placeholder="First Name"
+                            style={styles.input}
+                            onChange={(e) => setFirst(e.target.value)}
+                        />
 
-            </div>
+                        <input
+                            value={last}
+                            placeholder="Last Name"
+                            style={styles.input}
+                            onChange={(e) => setLast(e.target.value)}
+                        />
 
-            <div style={styles.listCard}>
-
-                <h3 style={styles.listTitle}> List of Names </h3>
-
-                {data.length === 0 ? (
-                <div style={styles.empty}> No entries yet </div>
-                ) : (
-                <table style={styles.table}>
-                    <thead>
-                    <tr>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                    </tr>
-                    </thead>
-
-                    <tbody>
-                    {data.map((x) => (
-                        <tr
-                        key={x.id}
-                        style={styles.row}
+                        <button
+                            disabled={disabled}
+                            onClick={save}
+                            style={{
+                                ...styles.button,
+                                opacity: disabled ? 0.5 : 1,
+                                cursor: disabled ? "not-allowed" : "pointer"
+                            }}
                         >
-                        <td>{x.first_name}</td>
-                        <td>{x.last_name}</td>
-                        </tr>
-                    ))}
-                    </tbody>
-
-                </table>
-                )}
-
+                            {loading ? "Saving..." : "Submit"}
+                        </button>
+                    </div>
+                    <div style={styles.listCard}>
+                        <h3 style={styles.listTitle}> List of Names </h3>
+                        {data.length === 0 ? (
+                            <div style={styles.empty}> No entries yet </div>
+                        ) : (
+                            <table style={styles.table}>
+                                <thead>
+                                    <tr>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {data.map((x) => (
+                                        <tr key={x.id} style={styles.row}>
+                                            <td>{x.first_name}</td>
+                                            <td>{x.last_name}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        )}
+                    </div>
+                </div>
+            <footer style={styles.footer}>
+                <p>
+                    © 2026 <span style={styles[".footer .brand"]}>efypuyot</span>. All rights reserved.
+                </p>
+            </footer>
             </div>
-
-            </div>
-        </div>
         </>
     )
 }
@@ -153,8 +145,10 @@ const styles = {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        background: "linear-gradient(135deg,#e6fff5,#dff5ff)",
-        padding: 30
+        background: "linear-gradient(135deg,#338017,#003f6a)",
+        padding: 30,
+        display: "flex",
+        flexDirection: "column",
     },
     card: {
         width: 800,
@@ -192,7 +186,7 @@ const styles = {
         transition: ".2s",
     },
     button: {
-        background: "linear-gradient(90deg,#14b8a6,#3b82f6)",
+        background: "linear-gradient(90deg,#338017,#003f6a)",
         color: "white",
         border: "none",
         padding: 16,
@@ -226,5 +220,17 @@ const styles = {
         textAlign: "center",
         padding: 30,
         color: "#64748b"
+    },
+    footer: {
+        width: "fit-content",
+        marginInline: "auto",
+        backdropFilter: "blur(16px)",
+        color: "#ffffff"
+    },
+    ".footer .brand": {
+        fontWeight: 700,
+        background: "linear-gradient(135deg, #338010,#ffffff)",
+        WebkitBackgroundClip: "text",
+        WebkitTextFillColor: "transparent"
     }
 }

@@ -2,7 +2,7 @@
 
 MNI is a small Laravel + React application for collecting names. The home page renders a React form, stores submitted first and last names through a Laravel API, and shows the newest saved entries first.
 
-## Deliverables
+## Deliverables for the Technical Assessment
 
 - Shared Git Repository: [https://github.com/efypuyot/mni](https://github.com/efypuyot/mni)
 - Static IP Deployment: [http://136.116.176.106](http://136.116.176.106/)
