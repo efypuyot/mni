@@ -1,58 +1,132 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# MNI stands for My name is...?
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+MNI is a small Laravel + React application for collecting names. The home page renders a React form, stores submitted first and last names through a Laravel API, and shows the newest saved entries first.
 
-## About Laravel
+## Deliverables
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Shared Git Repository: [https://github.com/efypuyot/mni](https://github.com/efypuyot/mni)
+- Static IP Deployment: [http://136.116.176.106](http://136.116.176.106/)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+The application is deployed live on a GCP VM instance and is fully working as of writing.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Stack
 
-## Learning Laravel
+- Laravel 13
+- PHP 8.3+
+- React 19
+- Vite 8
+- Tailwind CSS 4 tooling
+- Laravel Sanctum
+- Pest
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Features
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- Add a person's first and last name from the web UI.
+- Persist names in the `people` table.
+- List saved names from newest to oldest.
+- Show toast notifications for loading, success, and error states.
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+## Requirements
 
-## Agentic Development
+- PHP 8.3 or newer
+- Composer
+- Node.js and npm
+- PostgreSQL, matching the default `.env.example` database configuration
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## Setup
+
+Install PHP and JavaScript dependencies:
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+composer install
+npm install
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Create your environment file and application key:
 
-## Contributing
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Update `.env` with your local database credentials. The default database connection is PostgreSQL:
 
-## Code of Conduct
+```dotenv
+DB_CONNECTION=pgsql
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DATABASE=mni
+DB_USERNAME=postgres
+DB_PASSWORD=asdfghjkl
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Run the migrations:
 
-## Security Vulnerabilities
+```bash
+php artisan migrate
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+You can also run the project's setup script, which installs dependencies, prepares `.env`, runs migrations, and builds frontend assets:
 
-## License
+```bash
+composer run setup
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Development
+
+Start the Laravel server, queue listener, log tailer, and Vite dev server together:
+
+```bash
+composer run dev
+```
+
+Or run the services separately:
+
+```bash
+php artisan serve
+npm run dev
+```
+
+Then open the Laravel app in your browser, usually at:
+
+```text
+http://127.0.0.1:8000
+```
+
+## API
+
+The React frontend uses these API routes:
+
+| Method | Endpoint | Description |
+| --- | --- | --- |
+| `GET` | `/api/people` | Return all saved people, newest first. |
+| `POST` | `/api/people` | Save a person with `first_name` and `last_name`. |
+
+Example POST body:
+
+```json
+{
+  "first_name": "Ada",
+  "last_name": "Lovelace"
+}
+```
+
+## Testing and Formatting
+
+Run the test suite:
+
+```bash
+php artisan test --compact
+```
+
+Format PHP changes with Laravel Pint:
+
+```bash
+vendor/bin/pint --dirty --format agent
+```
+
+Build production frontend assets:
+
+```bash
+npm run build
+```
