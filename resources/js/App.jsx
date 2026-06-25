@@ -53,10 +53,6 @@ export default function App() {
             success: (data) => `Successfully saved ${data.name} ✨`,
             error: (err) => `Something happened: ${err.toString()}`
             },{
-            style: {
-                minWidth: "320px",
-                borderRadius: "14px"
-            },
             success: {
                 duration: 5000,
                 icon: "💚"
